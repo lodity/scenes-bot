@@ -5,13 +5,13 @@ import { getMessageForMarkdown } from '../../utils/getMessageForMarkdown.js';
 import { CMD_TEXT } from '../../config/constants.js';
 import { backMenu } from '../command.js';
 
-export const whatWeatherScene = new Scenes.BaseScene('weather');
+export const weatherScene = new Scenes.BaseScene('weather');
 
-whatWeatherScene.enter(async (ctx) => {
+weatherScene.enter(async (ctx) => {
     await ctx.reply('Find out weather in your area', backButtonMenuAndLocation);
 });
 
-whatWeatherScene.on('location', async (ctx) => {
+weatherScene.on('location', async (ctx) => {
     try {
         const message = ctx.message;
         const { latitude, longitude } = message.location;
@@ -32,7 +32,7 @@ whatWeatherScene.on('location', async (ctx) => {
     }
 });
 
-whatWeatherScene.hears(CMD_TEXT.menu, (ctx) => {
+weatherScene.hears(CMD_TEXT.menu, (ctx) => {
     ctx.scene.leave();
     return backMenu(ctx);
 });
