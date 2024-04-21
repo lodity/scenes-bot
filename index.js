@@ -1,19 +1,15 @@
 import 'dotenv/config';
-import { Telegraf } from 'telegraf';
-import { message } from 'telegraf/filters';
+import mongoose from 'mongoose';
+import setupBot  from './bot.js';
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
+(async function () {
+    try {
+        await mongoose.connect(process.env.DB_TOKEN);
+        console.log('MongoDB connected');
 
-bot.command('ping', async (ctx) => {
-    await ctx.reply(`Pong!`);
-});
-
-bot.on(message('text'), async (ctx) => {
-    await ctx.reply(`Ping?`);
-});
-
-bot.launch();
-
-// Enable graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
+        await setupBot().launch();
+        console.log('Bot started');
+    } catch (error) {
+        console.log(error);
+    }
+})();
