@@ -9,3 +9,5 @@ export const backButtonMenuAndLocation = Markup.keyboard([
     Markup.button.locationRequest('Send my location'),
     Markup.button.text(CMD_TEXT.menu),
 ]).resize();
+
+export const historySceneButtons = Markup.keyboard([[CMD_TEXT.refresh], [CMD_TEXT.menu]]).resize();

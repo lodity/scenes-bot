@@ -18,8 +18,8 @@ export const start = async (ctx) => {
     await ctx.scene.enter('start');
 };
 
-export const backMenu = (ctx) => {
-    ctx.reply('Back to main menu', mainMenu);
-    ctx.scene.leave();
-    start(ctx);
+export const backMenu = async (ctx) => {
+    await ctx.reply('Back to main menu', mainMenu);
+    await ctx.scene.leave();
+    await ctx.scene.enter('start');
 };

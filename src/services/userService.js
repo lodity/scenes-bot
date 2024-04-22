@@ -1,9 +1,9 @@
 import User from '../models/user.js';
 
 class UserService {
-    async createUser({id, firstName, username}) {
+    async createUser({ id, firstName, username }) {
         try {
-            const user = {id};
+            const user = { id };
             if (firstName) {
                 user.firstName = firstName;
             }

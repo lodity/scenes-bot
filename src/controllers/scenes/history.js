@@ -1,19 +1,18 @@
 import { Scenes } from 'telegraf';
-import { mainMenu } from '../../utils/buttons.js';
 import { CMD_TEXT } from '../../config/constants.js';
+import historyController from '../historyController.js';
 
 export const historyScene = new Scenes.BaseScene('history');
 
 historyScene.enter(async (ctx) => {
-    await ctx.reply('Scene in progress');
+    historyController.getHistory(ctx);
 });
 
-// historyScene.hears(CMD_TEXT.weatherI, (ctx) => {
-//     ctx.scene.leave();
-//     ctx.scene.enter('weather');
-// });
+historyScene.hears(CMD_TEXT.refresh, (ctx) => {
+    historyController.getHistory(ctx);
+});
 
-// historyScene.hears(CMD_TEXT.checkHistory, (ctx) => {
-//     ctx.scene.leave();
-//     ctx.scene.enter('history');
-// });
+historyScene.hears(CMD_TEXT.menu, (ctx) => {
+    ctx.scene.leave();
+    ctx.scene.enter('start');
+});
