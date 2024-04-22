@@ -1,16 +1,19 @@
 import { mainMenu } from '../utils/buttons.js';
 import User from '../models/user.js';
+import UserService from '../services/userService.js';
 
 export const start = async (ctx) => {
     await ctx.reply('Hello! Welcome to weather bot');
-    console.log(ctx.from);
-    const id = ctx.from.id;
-    const dbUser = await User.findOne({ id });
+    const user = ctx.from;
+    const dbUser = await User.findOne({ id: user.id });
 
     if (!dbUser) {
-        await createUser(id);
-        return ctx.scene.enter('setBirthYear');
-    } else if (!dbUser.birthYear) return ctx.scene.enter('setBirthYear');
+        await UserService.createUser({
+            id: user.id,
+            firstName: user.first_name,
+            username: user.username,
+        });
+    }
 
     await ctx.scene.enter('start');
 };
