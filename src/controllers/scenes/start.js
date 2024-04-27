@@ -1,6 +1,7 @@
 import { Scenes } from 'telegraf';
 import { mainMenu } from '../../utils/buttons.js';
 import { CMD_TEXT } from '../../config/constants.js';
+import reloadScene from '../../utils/reloadScene.js';
 
 export const startScene = new Scenes.BaseScene('start');
 
@@ -9,11 +10,13 @@ startScene.enter(async (ctx) => {
 });
 
 startScene.hears(CMD_TEXT.weatherI, (ctx) => {
-    ctx.scene.leave();
-    ctx.scene.enter('weather');
+    reloadScene(ctx, 'weather');
 });
 
 startScene.hears(CMD_TEXT.checkHistory, (ctx) => {
-    ctx.scene.leave();
-    ctx.scene.enter('history');
+    reloadScene(ctx, 'history');
+});
+
+startScene.on('message', (ctx) => {
+    reloadScene(ctx, 'start');
 });

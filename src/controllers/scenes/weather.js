@@ -5,11 +5,12 @@ import getMessageForMarkdown from '../../utils/getMessageForMarkdown.js';
 import { CMD_TEXT } from '../../config/constants.js';
 import { backMenu } from '../command.js';
 import HistoryService from '../../services/historyService.js';
+import reloadScene from '../../utils/reloadScene.js';
 
 export const weatherScene = new Scenes.BaseScene('weather');
 
 weatherScene.enter(async (ctx) => {
-    await ctx.reply('Find out weather in your area', backButtonMenuAndLocation);
+    await ctx.reply('Send your location or select it on the map', backButtonMenuAndLocation);
 });
 
 weatherScene.on('location', async (ctx) => {
@@ -42,6 +43,9 @@ weatherScene.on('location', async (ctx) => {
 });
 
 weatherScene.hears(CMD_TEXT.menu, (ctx) => {
-    ctx.scene.leave();
     return backMenu(ctx);
+});
+
+weatherScene.on('message', (ctx) => {
+    reloadScene(ctx, 'weather');
 });

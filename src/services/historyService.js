@@ -17,13 +17,22 @@ class HistoryService {
             return false;
         }
     }
-    async getNotes(userId) {
+    async getNotes(userId, limit) {
         try {
-            const notes = await Weather.find({ userId });
+            const notes = (await Weather.find({ userId }).limit(limit));
             return notes;
         } catch (error) {
             console.error(error);
             return false;
+        }
+    }
+    async getNotesCount(userId) {
+        try {
+            const count = await Weather.countDocuments({ userId });
+            return count;
+        } catch (error) {
+            console.error(error);
+            return undefined;
         }
     }
 }
