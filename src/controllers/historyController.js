@@ -3,7 +3,7 @@ import HistoryService from '../services/historyService.js';
 import { historyEnterCountOfNotes, historySceneButtons } from '../utils/buttons.js';
 
 class HistoryController {
-    async getHistory(ctx, limit = 3) {
+    async getHistory(ctx, limit) {
         const historyNotes = await HistoryService.getNotes(ctx.from.id, limit);
         const message = historyNotes
             .map((note, index) => {
@@ -15,7 +15,7 @@ class HistoryController {
     }
     async askNotesToShow(ctx) {
         const notesCount = await HistoryService.getNotesCount(ctx.from.id);
-        const message = `You have ${notesCount} notes.\nEnter count of notes you want to see`;
+        const message = `You have ${notesCount} notes.\nEnter count of notes you want to see:`;
         await ctx.reply(message, historyEnterCountOfNotes);
     }
 }

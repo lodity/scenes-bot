@@ -19,7 +19,9 @@ class HistoryService {
     }
     async getNotes(userId, limit) {
         try {
-            const notes = (await Weather.find({ userId }).limit(limit));
+            const notes = limit
+                ? await Weather.find({ userId }).limit(limit)
+                : await Weather.find({ userId });
             return notes;
         } catch (error) {
             console.error(error);
